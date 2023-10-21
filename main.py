@@ -6,9 +6,15 @@ def main(page: ft.Page) -> None:
     page.vertical_alignment = "center"
     # page.horizontal_alignment = "center"
 
-    file_picker = ft.FilePicker()
-    page.overlay.append(file_picker)
-    page.update()
+    def pick_files_result(e: ft.FilePickerResultEvent):
+        selected_files.value = (
+            ", ".join(map(lambda f: f.path, e.files)) if e.files else "Cancelled!"
+        )
+        print(selected_files.value)
+        selected_files.update()
+
+    pick_files_dialog = ft.FilePicker(on_result=pick_files_result)
+    selected_files = ft.Text()
 
     def close_dlg(e) -> None:
         dlg_modal.open = False
@@ -54,10 +60,9 @@ def main(page: ft.Page) -> None:
 
     # uploads btn
     btn_upload_certificate = ft.ElevatedButton(
-        text="Upload certificate",
-        icon=ft.icons.UPLOAD_FILE_OUTLINED,
-        color=ft.colors.AMBER,
-        on_click=lambda _: file_picker.pick_files(allow_multiple=True),
+        text="Pick files",
+        icon=ft.icons.UPLOAD_FILE,
+        on_click=lambda _: pick_files_dialog.pick_files(allow_multiple=True),
     )
 
     # send mail btn
@@ -81,13 +86,13 @@ def main(page: ft.Page) -> None:
         destinations=[
             ft.NavigationRailDestination(
                 icon=ft.icons.FAVORITE_BORDER,
-                selected_icon=ft.icons.FAVORITE,
-                label="First",
+                selected_icon=ft.icons.MENU_BOOK_OUTLINED,
+                label="Menu",
             ),
             ft.NavigationRailDestination(
                 icon_content=ft.Icon(ft.icons.BOOKMARK_BORDER),
-                selected_icon_content=ft.Icon(ft.icons.BOOKMARK),
-                label="Second",
+                selected_icon_content=ft.Icon(ft.icons.CONTROL_POINT_DUPLICATE_ROUNDED),
+                label="Alignment",
             ),
             ft.NavigationRailDestination(
                 icon=ft.icons.SETTINGS_OUTLINED,
@@ -98,7 +103,16 @@ def main(page: ft.Page) -> None:
         on_change=lambda e: print("Selected destination:", e.control.selected_index),
     )
 
+    img = ft.Image(
+        src=".\powershell_icon_132080.png" if selected_files.value else "",
+        width=100,
+        height=100,
+        fit=ft.ImageFit.CONTAIN,
+    )
+    images = ft.Row(expand=1, wrap=False, scroll="always")
+
     # test
+    page.overlay.extend([pick_files_dialog])
 
     page.add(
         ft.Row(
@@ -112,6 +126,7 @@ def main(page: ft.Page) -> None:
                 ft.Row(
                     controls=[
                         btn_generate,
+                        ft.Text(value="     "),
                         btn_send_mail,
                     ],
                     alignment=ft.MainAxisAlignment.SPACE_EVENLY,
@@ -124,8 +139,10 @@ def main(page: ft.Page) -> None:
                 rail,
                 ft.VerticalDivider(width=1),
                 ft.Row(
-                    [
+                    controls=[
+                        img,
                         btn_upload_certificate,
+                        selected_files,
                     ],
                     alignment=ft.MainAxisAlignment.CENTER,
                     expand=True,
