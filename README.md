@@ -12,7 +12,7 @@ you can also export the certificates as a zip file or you can directly send the 
 this project helps you handle certificate distribution easier and saving more time
 ## Team members
 1. [Akhil B Xavier](https://github.com/winter-x64)
-2. [Name 2](https://github.com/TH-Activities/saturday-hack-night-template)
+2. [Alan Lopez ](https://github.com/oceangod2004)
 2. [Name 3](https://github.com/TH-Activities/saturday-hack-night-template)
 ## Link to product walkthrough
 [link to video](Link Here)
