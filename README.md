@@ -13,7 +13,7 @@ this project helps you handle certificate distribution easier and saving more ti
 ## Team members
 1. [Akhil B Xavier](https://github.com/winter-x64)
 2. [Alan Lopez ](https://github.com/oceangod2004)
-2. [Angel mariya](https://github.com/TH-Activities/saturday-hack-night-template)
+2. [Angel mariya](https://github.com/angelmariy)
 3. [Donavan Joseph](https://github.com/Don-ash)
 ## Link to product walkthrough
 [link to video](Link Here)
